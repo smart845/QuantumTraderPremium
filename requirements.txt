@@ -23,7 +23,8 @@ wheel
 ccxt
 pandas
 numpy
-ta
+ta==0.10.2
+
 tensorflow
 xgboost
 scikit-learn
