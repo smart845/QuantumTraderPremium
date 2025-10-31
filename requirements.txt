@@ -6,8 +6,9 @@ magic-filter==1.0.12
 certifi==2023.7.22
 
 # --- Compatible Pydantic versions (fix conflict) ---
-pydantic==2.5.3
+pydantic==2.8.2
 pydantic-settings==2.3.4
+
 
 # --- Core utilities ---
 python-dotenv
