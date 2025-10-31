@@ -97,17 +97,29 @@ async def start(message: types.Message):
     if len(parts) > 1 and parts[1].startswith("ref"):
         try:
             ref_id = int(parts[1].replace("ref",""))
-            if ref_id != user.id:
-                set_user_referrer(user.id, ref_id, username=(user.username and "@"+user.username) )
+        ref_id = None
+if len(parts) > 1 and parts[1].startswith("ref"):
+    try:
+        ref_id = int(parts[1].replace("ref", ""))
+        if ref_id != user.id:
+            set_user_referrer(
+                user.id, ref_id,
+                username=(user.username and "@" + user.username)
+            )
+    except Exception as e:
+        print("Referral parse error:", e)
+        ref_id = None
 
-    # also store referrer in users.json for later payment linking
-    users = load_users()
-    u = users.get(str(user.id), {"start": datetime.datetime.now().isoformat(), "plan":"trial"})
+# also store referrer in users.json for later payment linking
+users = load_users()
+u = users.get(str(user.id), {"start": datetime.datetime.now().isoformat(), "plan": "trial"})
+if ref_id is not None:
     u["referrer_id"] = ref_id
-    if user.username:
-        u["username"] = "@"+user.username
-    users[str(user.id)] = u
-    save_users(users)
+if user.username:
+    u["username"] = "@" + user.username
+users[str(user.id)] = u
+save_users(users)
+    
 
         except: pass
 
