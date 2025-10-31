@@ -1,3 +1,8 @@
+# --- Render Build Fix ---
+setuptools>=68.0.0
+wheel
+cryptography==41.0.3
+bcrypt==4.0.1
 # --- Core libraries ---
 aiogram==3.2.0
 python-dotenv
