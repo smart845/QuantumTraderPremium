@@ -1,15 +1,15 @@
-# --- Core framework ---
+# --- Telegram bot framework ---
 aiogram==3.2.0
 aiofiles==23.2.1
 aiohttp==3.9.5
-certifi==2023.7.22
 magic-filter==1.0.12
+certifi==2023.7.22
 
-# --- Fix conflict: compatible Pydantic versions ---
+# --- Compatible Pydantic versions (fix conflict) ---
 pydantic==2.5.3
 pydantic-settings==2.3.4
 
-# --- Utilities and environment ---
+# --- Core utilities ---
 python-dotenv
 requests
 websockets
@@ -18,9 +18,8 @@ structlog==24.1.0
 sentry-sdk==2.9.0
 setuptools>=68.0.0
 wheel
-cryptography==41.0.3
 
-# --- Machine learning and data ---
+# --- Crypto / finance / data ---
 ccxt
 pandas
 numpy
@@ -32,8 +31,15 @@ matplotlib
 mplfinance
 joblib
 
-# --- Databases and security ---
+# --- Databases / async / security ---
 sqlalchemy[asyncio]==2.0.25
 aiosqlite==0.19.0
 passlib[bcrypt]==1.7.4
 slowapi==0.1.9
+
+# --- Rust-related packages pinned to binary versions ---
+cryptography==41.0.3
+bcrypt==4.1.2
+
+# --- Force pip to use only prebuilt binary wheels (avoid Rust build errors) ---
+--only-binary=:all:
