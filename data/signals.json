@@ -1,0 +1,20 @@
+{
+  "last_signals": [
+    {
+      "ts": "2025-10-29T10:12:00",
+      "symbol": "BTCUSDT",
+      "dir": "LONG",
+      "price": 68320,
+      "tp": 69000,
+      "sl": 67800
+    },
+    {
+      "ts": "2025-10-29T10:35:00",
+      "symbol": "ETHUSDT",
+      "dir": "SHORT",
+      "price": 3650,
+      "tp": 3580,
+      "sl": 3690
+    }
+  ]
+}

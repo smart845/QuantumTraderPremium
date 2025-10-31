@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": "python"
+  },
+  "services": [
+    {"name":"dashboard","start":"python dashboard/app.py"},
+    {"name":"bot","start":"python run_bot.py"},
+    {"name":"ton_checker","start":"python core/subscription_checker.py"}
+  ]
+}

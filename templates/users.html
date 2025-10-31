@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+<div class="container py-4">
+  <h2 class="mb-3">Пользователи</h2>
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-auto"><input class="form-control" type="text" name="q" placeholder="Поиск по UID/username"></div>
+    <div class="col-auto">
+      <select class="form-select" name="plan">
+        <option value="">Все планы</option>
+        <option value="trial">trial</option>
+        <option value="month">month</option>
+        <option value="year">year</option>
+        <option value="blocked">blocked</option>
+      </select>
+    </div>
+    <div class="col-auto"><button class="btn btn-primary" type="submit">Фильтр</button></div>
+  </form>
+  <div class="table-responsive">
+  <table class="table table-dark table-striped align-middle">
+    <thead><tr><th>UID</th><th>Plan</th><th>Start</th><th>Expires</th><th>Referrer</th><th>Username</th></tr></thead>
+    <tbody>
+    {% for u in users %}
+      <tr><td>{{ u.uid }}</td><td>{{ u.plan }}</td><td>{{ u.start }}</td><td>{{ u.expires }}</td><td>{{ u.referrer_id }}</td><td>{{ u.username }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <a class="btn btn-outline-light" href="/">Назад</a>
+</div>
+</body>
+</html>

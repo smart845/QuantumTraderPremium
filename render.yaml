@@ -1,0 +1,93 @@
+services:
+  - type: web
+    name: quantum-dashboard
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python dashboard/app.py"
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: BOT_USERNAME
+        sync: false
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: ADMIN_CHANNEL_ID
+        sync: false
+      - key: TON_ADDRESS
+        sync: false
+      - key: TONCENTER_API
+        value: "https://toncenter.com/api/v2/getTransactions"
+      - key: TONCENTER_API_KEY
+        sync: false
+      - key: USERS_FILE
+        value: "data/users.json"
+      - key: REFERRALS_FILE
+        value: "data/referrals.json"
+      - key: TRADES_FILE
+        value: "data/trades.json"
+      - key: SIGNALS_FILE
+        value: "data/signals.json"
+      - key: AI_INSIGHT_FILE
+        value: "data/ai_insight.json"
+      - key: TRIAL_DAYS
+        value: "3"
+      - key: SUBSCRIPTION_CHECK_INTERVAL
+        value: "600"
+      - key: DASHBOARD_PORT
+        value: "10000"
+      - key: ADMIN_REPORT_CRON
+        value: "0 9 * * *"
+
+  - type: worker
+    name: quantum-bot
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python run_bot.py"
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: BOT_USERNAME
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: TON_ADDRESS
+        sync: false
+      - key: USERS_FILE
+        value: "data/users.json"
+      - key: REFERRALS_FILE
+        value: "data/referrals.json"
+      - key: TRIAL_DAYS
+        value: "3"
+
+  - type: worker
+    name: ton-checker
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python core/subscription_checker.py"
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: TON_ADDRESS
+        sync: false
+      - key: TONCENTER_API
+        value: "https://toncenter.com/api/v2/getTransactions"
+      - key: TONCENTER_API_KEY
+        sync: false
+      - key: USERS_FILE
+        value: "data/users.json"
+      - key: REFERRALS_FILE
+        value: "data/referrals.json"
+      - key: SUBSCRIPTION_CHECK_INTERVAL
+        value: "600"
+      - key: ADMIN_IDS
+        sync: false

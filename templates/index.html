@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>QuantumTrader Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+<nav class="bg-gray-800 border-b border-gray-700">
+  <div class="mx-auto max-w-7xl px-4 py-3 flex gap-4 items-center">
+    <h1 class="text-xl font-semibold">QuantumTrader Admin Dashboard</h1>
+    <a class="text-sm text-blue-400 hover:underline" href="/users">Users</a>
+    <a class="text-sm text-blue-400 hover:underline" href="/referrals">Referrals</a>
+    <a class="text-sm text-blue-400 hover:underline" href="/signals">Signals Feed</a>
+    <a class="text-sm text-blue-400 hover:underline" href="/export/users.csv">users.csv</a>
+    <a class="text-sm text-blue-400 hover:underline" href="/export/referrals.csv">referrals.csv</a>
+    <a class="text-sm text-blue-400 hover:underline" href="/backup/export.json">backup.json</a>
+  </div>
+</nav>
+
+<main class="mx-auto max-w-7xl px-4 py-6">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-gray-800 rounded p-4"><div class="text-gray-400 uppercase text-xs">Всего пользователей</div><div class="text-3xl font-bold">{{ total }}</div></div>
+    <div class="bg-emerald-900 rounded p-4"><div class="text-gray-200 uppercase text-xs">Активных подписок</div><div class="text-3xl font-bold">{{ active }}</div></div>
+    <div class="bg-blue-900 rounded p-4"><div class="text-gray-200 uppercase text-xs">На триале</div><div class="text-3xl font-bold">{{ trial }}</div></div>
+    <div class="bg-rose-900 rounded p-4"><div class="text-gray-200 uppercase text-xs">Заблокировано</div><div class="text-3xl font-bold">{{ blocked }}</div></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+    <div class="bg-gray-800 rounded p-4">
+      <div class="text-gray-400 uppercase text-xs mb-2">TON начислено (всего)</div>
+      <div class="text-3xl font-bold">{{ total_earned }}</div>
+    </div>
+    <div class="bg-yellow-900 rounded p-4">
+      <div class="text-gray-200 uppercase text-xs mb-2">Ожидает выплат (шт.)</div>
+      <div class="text-3xl font-bold">{{ waiting_payouts }}</div>
+    </div>
+  </div>
+
+  <div class="bg-gray-800 rounded p-4 mt-6">
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-lg font-semibold">PnL по дням</h2>
+      <form action="/backup/import" method="post" enctype="multipart/form-data" class="flex items-center gap-2">
+        <input type="file" name="file" class="text-sm">
+        <button class="px-3 py-1 bg-blue-600 rounded text-sm">Импорт backup.json</button>
+      </form>
+    </div>
+    <div id="pnlChart" style="height:360px"></div>
+  </div>
+</main>
+
+<script>
+fetch('/api/metrics', {credentials:'include'}).then(r=>r.json()).then(data=>{
+  const points = (data.pnl_by_day || []);
+  const x = points.map(p=>p.date);
+  const y = points.map(p=>p.pnl);
+  Plotly.newPlot('pnlChart', [{
+    x:x, y:y, mode:'lines+markers', fill:'tozeroy'
+  }], {paper_bgcolor:'#1f2937', plot_bgcolor:'#1f2937', font:{color:'#e5e7eb'}});
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+</html>

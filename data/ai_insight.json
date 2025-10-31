@@ -1,0 +1,19 @@
+{
+  "updated_at": "2025-10-30T22:31:42.003061",
+  "insights": [
+    {
+      "symbol": "BTCUSDT",
+      "direction": "LONG",
+      "confidence": 0.68,
+      "reason": "Momentum+MACD",
+      "ts": "2025-10-30T22:31:42.003079"
+    },
+    {
+      "symbol": "ETHUSDT",
+      "direction": "SHORT",
+      "confidence": 0.61,
+      "reason": "Overbought RSI",
+      "ts": "2025-10-30T22:31:42.003081"
+    }
+  ]
+}

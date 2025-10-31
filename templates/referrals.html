@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Referrals</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+<div class="container py-4">
+  <h2 class="mb-3">Рефералы</h2>
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-auto"><input class="form-control" type="text" name="rid" placeholder="Referrer ID"></div>
+    <div class="col-auto"><input class="form-control" type="text" name="uid" placeholder="Referred ID"></div>
+    <div class="col-auto">
+      <select class="form-select" name="status">
+        <option value="">Все статусы</option>
+        <option value="pending">pending</option>
+        <option value="paid">paid</option>
+        <option value="expired">expired</option>
+      </select>
+    </div>
+    <div class="col-auto"><button class="btn btn-primary" type="submit">Фильтр</button></div>
+  </form>
+  <div class="table-responsive">
+  <table class="table table-dark table-striped align-middle">
+    <thead><tr><th>Referrer</th><th>Referred</th><th>Username</th><th>Status</th><th>Registered</th><th>Paid at</th><th>Bonus sent</th><th>Address</th><th>Действие</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td>{{ r.referrer_id }}</td>
+        <td>{{ r.referred_id }}</td>
+        <td>{{ r.username }}</td>
+        <td>
+          {% if r.status=='paid' %}<span class="badge bg-success">paid</span>
+          {% elif r.status=='pending' %}<span class="badge bg-warning">pending</span>
+          {% else %}<span class="badge bg-secondary">expired</span>{% endif %}
+        </td>
+        <td>{{ r.registered }}</td>
+        <td>{{ r.paid_at }}</td>
+        <td>{{ r.bonus_sent }}</td>
+        <td>{{ r.address }}</td>
+        <td>
+          {% if r.status == 'paid' and not r.bonus_sent %}
+          <form action="/mark-paid" method="post" class="d-inline">
+            <input type="hidden" name="referrer_id" value="{{ r.referrer_id }}">
+            <input type="hidden" name="referred_id" value="{{ r.referred_id }}">
+            <button type="submit" class="btn btn-sm btn-success">Пометить выплаченным</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <a class="btn btn-outline-light" href="/">Назад</a>
+</div>
+</body>
+</html>
